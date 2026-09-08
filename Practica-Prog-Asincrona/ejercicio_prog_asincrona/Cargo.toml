@@ -1,0 +1,12 @@
+[package]
+name = "ejercicio_prog_asincrona"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-std = "1.13.2"
+dotenvy = "0.15.7"
+futures = "0.3.34"
+reqwest = { version = "0.13.4", features = ["json", "form"] }
+serde = { version = "1.0.229", features = ["derive"] }
+tokio = "1.53.1"
