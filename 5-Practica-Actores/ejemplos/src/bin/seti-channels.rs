@@ -38,7 +38,7 @@ fn main() {
             // Nace el hilo. Se lleva su receptor privado y el transmisor cental.
             let t = thread::spawn(move || worker(id, worker_receive, result_send_worker));
             
-            // Guardamor el transmisor pricado del worker y el control del hilo para usarlo luego.
+            // Guardamor el transmisor pricado del Trabajador y el control del hilo para usarlo luego.
             (worker_send, t)
         })
         .collect();
@@ -68,7 +68,7 @@ fn main() {
         println!("[COORDINADOR] señal final {}", signal_epoch);
         signal = signal_epoch
     }
-    // Esperamos a que los hilos terminen
+    // Esperamos a que los hilos terminen.
     let _:Vec<()> = workers.into_iter()
         .flat_map(|(_,h)| h.join())
         .collect();
@@ -81,7 +81,7 @@ fn start_epoch(signal: &mut f64, workers: &Vec<(Sender<f64>, JoinHandle<()>)>) -
     let signal_worker = *signal / (WORKERS as f64);
     
     // Le envia la porción a cada worker por su canal privado.
-    // Como los canales son asíncronos por defecto en Rust, esto no bloquea al coordinador.
+    // Como los canales son asíncronos por defecto en Rust, esto no bloquea al Coordinador.
     for (worker, _) in workers {
         worker.send(signal_worker).unwrap();
     }
