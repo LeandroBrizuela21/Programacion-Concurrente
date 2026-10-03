@@ -216,7 +216,7 @@ impl Handler<ChopstickResponse> for Philosopher {
         println!("[{}] recibi palito {}", self.id, msg.0.0);
         // Cuando me dan un palillo, siempre llega ´Clean´
         self.chopsticks.insert(msg.0,ChopstickState::Clean);
-        // Como me llegó un recuerso nuevo, intento comer nuevamente. 
+        // Como me llegó un recurso nuevo, intento comer nuevamente. 
         ctx.address().try_send(TryToEat).unwrap();
     }
 }
