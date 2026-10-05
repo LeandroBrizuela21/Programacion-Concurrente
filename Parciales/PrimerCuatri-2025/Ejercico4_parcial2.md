@@ -8,7 +8,7 @@
 ```rust 
 struct Tarjeta{
     id_tarjeta: usize,
-    equipo: RefCreditoArea
+    equipo: ActorRef<CreditoArea>
 }
 
 struct Empleado{
@@ -51,7 +51,7 @@ struct AcreditarSaldo(monto: u32)
 
 ```rust 
 // Se envia desde `Cafetera` 
-struct SolicitarCompra{cafetera: RefCafetera, monto: u32}
+struct SolicitarCompra{cafetera: ActorRef<Cafetera>, monto: u32}
 ``` 
 - El `CreditoArea` recibe un mensaje cuando en alguna `Cafetera` solicito la compra de un cafe.
 - Dicha solicitud puede ser aceptada mediante el mensaje `CompraAceptada` (en caso de que se cuente con el `monto` necesario para la compra) o rechazada mediante el mensaje  `CompraRechazada` (en caso de que no se cuente con el `monto` necesario para la compra).
@@ -63,7 +63,7 @@ struct SolicitarCompra{cafetera: RefCafetera, monto: u32}
 struct Cafetera {
     id_cafetera: usize,
     piso: u8
-    cliente_actual: Option
+    cliente_actual: ActorRef<Empleado>
 }
 ```
 
@@ -71,7 +71,7 @@ struct Cafetera {
 
 ```rust  
 // Se envia desde `Empleado`
-struct SolicitarCafe{monto: u32, tarjeta: Tarjeta, empleado: RefEmpleado}
+struct SolicitarCafe{monto: u32, tarjeta: Tarjeta, empleado: ActorRef<Empleado>}
 ``` 
 - La `Cafetera` recibe un mensaje del empleando solicitando el monto de los creditos requeridos, su tarjeta donde se encuentra la dirección de su `CreditoArea` y su referencia para que le notifiquen el estado de su solicitud.
 
@@ -96,7 +96,7 @@ struct CompraRechazada{}
 struct Gerente {
     id: usize,
     id_area: usize,
-    equipo_a_cargo: RefCreditoArea,
+    equipo_a_cargo: ActorRef<CreditoArea>,
 }
 ```
  
